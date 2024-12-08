@@ -115,3 +115,156 @@ animate();
 ---------------------------------------------------------------------------------------------------------------------
 
 till now three.js is installed in our vite app
+
+import * as THREE from 'three';
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+
+camera.position.z = 5;
+const geometry = new THREE.BoxGeometry(2, 2);
+const material = new THREE.MeshBasicMaterial({color: 'red'});
+const Mesh = new THREE.Mesh(geometry, material);
+
+Mesh.rotation.z = 1.57;    
+
+scene.add(Mesh);
+
+const canvas = document.querySelector('canvas');
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+renderer.render(scene, camera);
+
+// function animate() {
+//   window.requestAnimationFrame(animate);
+//     Mesh.rotation.x += 0.01;
+//     Mesh.rotation.y += 0.01;
+// }
+// animate();
+
+so in above code expalins here
+
+Mesh.rotation.z = 1.57;    // 1.57 is 90 degree so the cube is rotated 90 degree     
+90 degree = 1.57  
+180 degree = 3.14
+ 270 degree = 4.71
+360 degree = 6.28
+
+but we have to write it like this 
+for 90 degree = pi/2
+for 180 degree = pi
+for 270 degree = 3*pi/2
+for 360 degree = 2*pi
+
+
+if we want we can add more than one objects in our scene for that below is the code
+
+import * as THREE from 'three';
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+
+camera.position.z = 5;
+
+const cubegeo = new THREE.BoxGeometry(1, 1, 1);
+const cubemat = new THREE.MeshBasicMaterial({color: 'red'});
+const cube= new THREE.Mesh(cubegeo, cubemat);
+
+cube.position.x = -1;
+
+const spheregeo = new THREE.SphereGeometry(1, 10, 10);
+const spheremat = new THREE.MeshBasicMaterial({color: 'red'});
+const sphere= new THREE.Mesh(spheregeo, spheremat);
+
+sphere.position.x = 1;
+scene.add(cube);
+scene.add(sphere);
+
+const canvas = document.querySelector('canvas');
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+renderer.render(scene, camera);
+
+// function animate() {
+//   window.requestAnimationFrame(animate);
+//     Mesh.rotation.x += 0.01;
+//     Mesh.rotation.y += 0.01;
+// }
+// animate();
+
+but in above code if we move sphere in x axis only sphere is moving in x axis and cube is not moving in x axis so to make both cube and sphere move in x axis we have to write this code 
+
+const group = new THREE.Group();
+group.add(cube);
+group.add(sphere);
+
+group.position.x = 2;
+
+scene.add(group);
+
+this will amke sure that both cube and sphere are moving in x axis
+
+
+here is the final code for above code 
+
+
+main.js
+import * as THREE from 'three';
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+
+camera.position.z = 5;
+
+const cubegeo = new THREE.BoxGeometry(1, 1, 1);
+const cubemat = new THREE.MeshBasicMaterial({color: 'red'});
+const cube= new THREE.Mesh(cubegeo, cubemat);
+
+cube.position.x = -1;
+
+const spheregeo = new THREE.SphereGeometry(1, 10, 10);
+const spheremat = new THREE.MeshBasicMaterial({color: 'red'});
+const sphere= new THREE.Mesh(spheregeo, spheremat);
+
+sphere.position.x = 1;
+
+const group = new THREE.Group();
+group.add(cube);
+group.add(sphere);
+
+group.position.x = 2;
+
+scene.add(group);
+
+
+const canvas = document.querySelector('canvas');
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+renderer.render(scene, camera);
+
+// function animate() {
+//   window.requestAnimationFrame(animate);
+//     Mesh.rotation.x += 0.01;
+//     Mesh.rotation.y += 0.01;
+// }
+// animate();
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <!-- <h1 class="bg-purple-500">hey</h1> -->
+   <canvas class="absolute top-0 left-0 w-full h-screen"></canvas>
+   <script type="module" src="./src/main.js"></script>
+</body>
+</html>
