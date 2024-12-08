@@ -5,8 +5,8 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 
 camera.position.z = 5;
 
-const cubegeo = new THREE.BoxGeometry(1, 1, 1);
-const cubemat = new THREE.MeshBasicMaterial({color: 'red'});
+const cubegeo = new THREE.CapsuleGeometry( 1, 1, 4, 8 ); 
+const cubemat = new THREE.MeshBasicMaterial({color: 'red', wireframe: true});
 const cube= new THREE.Mesh(cubegeo, cubemat);
 
 scene.add(cube);
@@ -15,13 +15,13 @@ const canvas = document.querySelector('canvas');
 const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-
-
-let clock = new THREE.Clock();
+renderer.render(scene, camera);
 
 function animate() {
       window.requestAnimationFrame(animate);
-      cube.rotation.y = clock.getElapsedTime() * 2;
+      cube.rotation.y += 0.1;
+      cube.rotation.x += 0.1;
+      cube.rotation.z += 0.1;
       renderer.render(scene, camera);
 }
 animate();

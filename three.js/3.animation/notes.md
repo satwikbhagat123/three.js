@@ -140,3 +140,44 @@ index.html file
    <script type="module" src="./src/main.js"></script>
 </body>
 </html>
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+                                                                                      next chapter 
+
+box geometry
+
+import * as THREE from 'three';
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+
+camera.position.z = 5;
+
+const cubegeo = new THREE.BoxGeometry( 1, 1, 1 );
+const cubemat = new THREE.MeshBasicMaterial({color: 'red', wireframe: true});
+const cube= new THREE.Mesh(cubegeo, cubemat);
+
+scene.add(cube);
+
+const canvas = document.querySelector('canvas');
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+renderer.render(scene, camera);
+
+function animate() {
+      window.requestAnimationFrame(animate);
+      cube.rotation.y += 0.1;
+      cube.rotation.x += 0.1;
+      cube.rotation.z += 0.1;
+      renderer.render(scene, camera);
+}
+animate();
+
+and try all the geometries as much as we can from three.js org>>documentation then search geometry and below we can see all the geometries try those 
+
+https://threejs.org/docs/index.html?q=geometry#api/en/geometries/
+
+here is the link to see all the geometries
