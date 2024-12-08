@@ -74,3 +74,44 @@ now we will see that our project is running on localhost
 
 till now aur vite app setup is completed with tailwind css
 ---------------------------------------------------------------------------------------------------------------------
+
+now we will start with three.js installation
+type in terminal 
+npm install three
+press enter
+
+now go to index.html file and write this code 
+
+   <canvas class="absolute top-0 left-0 w-full h-screen"></canvas>
+   <script type="module" src="./src/main.js"></script>
+   jb tkk hmm type module nhi likhenge tb tkk hmm import aur baki sb word use nhi kr sakte 
+
+open main.js file and write this code 
+
+import * as THREE from 'three';
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+
+camera.position.z = 5;
+const geometry = new THREE.BoxGeometry(2, 2);
+const material = new THREE.MeshBasicMaterial({color: 'red'});
+const Mesh = new THREE.Mesh(geometry, material);
+scene.add(Mesh);
+
+const canvas = document.querySelector('canvas');
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+function animate() {
+  window.requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+    Mesh.rotation.x += 0.01;
+    Mesh.rotation.y += 0.01;
+}
+animate();
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+till now three.js is installed in our vite app
