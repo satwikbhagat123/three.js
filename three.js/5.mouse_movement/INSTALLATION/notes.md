@@ -1,21 +1,28 @@
-                                             introduction to materials in three.js
+lookat belongs to object 3d class isme hmm jo bhi points denge uske hisab se yeh uss taraf dekhne lagega aur iska code hmm likh sakte h kuch ahse
 
-mesh normal material
+mesh.lookAt(-1 , 1, 0 );
+
+
+full code is below
 
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
+// ... existing code ...
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// ... existing code ...
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
 
 camera.position.z = 5;
 
-const geometry = new THREE.SphereGeometry(1, 70, 70);
-const material = new THREE.MeshNormalMaterial();
+
+const geometry = new THREE.BoxGeometry(1, 2, 3);
+const material = new THREE.MeshBasicMaterial({color: "red"});
 const mesh = new THREE.Mesh(geometry, material);
-mesh.rotation.y = 1;
+
+mesh.lookAt(-1, 1, 0);
+
 scene.add(mesh);
 
 const canvas = document.querySelector('canvas');
@@ -32,46 +39,9 @@ function animate() {
 animate();
 
 
+but ahse points dena shi tarika nhi h hme kuch ahse dena chahiye points ko 
 
-mesh basic material
-
-
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-
-camera.position.z = 5;
-
-const geometry = new THREE.SphereGeometry(1, 20, 20);
-const material = new THREE.MeshBasicMaterial({wireframe:true});
-const mesh = new THREE.Mesh(geometry, material);
-mesh.rotation.y = 1;
-scene.add(mesh);
-
-const canvas = document.querySelector('canvas');
-const renderer = new THREE.WebGLRenderer({canvas});
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-const controls = new OrbitControls(camera, renderer.domElement);  
-
-function animate() {
-      window.requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-}
-animate();
-
-
-mesh standard material
-
-isme hme kuch nhi dikhega jb tkk hmm light add nhi krenge toh lights add krne ke liye hmm likhenge
-
-let light = new THREE.DirectionalLight("white",2);  ///light color and intensity set krne ke liye
-light.position.set(1, 1, 1);   ///light position set krne ke liye
-scene.add(light);  ///light add krne ke liye
+mesh.lookAt(new THREE.Vector3(-1, 1, 0));
 
 
 full code is below
@@ -79,22 +49,21 @@ full code is below
 
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
+// ... existing code ...
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// ... existing code ...
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
 
 camera.position.z = 5;
 
-let light = new THREE.DirectionalLight("white",2);  ///light color and intensity set krne ke liye
-light.position.set(1, 1, 1);   ///light position set krne ke liye
-scene.add(light);  ///light add krne ke liye
 
-const geometry = new THREE.SphereGeometry(1, 20, 20);
-const material = new THREE.MeshStandardMaterial({ color: "white"});
+const geometry = new THREE.BoxGeometry(1, 2, 3);
+const material = new THREE.MeshBasicMaterial({color: "red"});
 const mesh = new THREE.Mesh(geometry, material);
-mesh.rotation.y = 1;
+
+mesh.lookAt(new THREE.Vector3(-0.5, 0.1, 0.4));
 scene.add(mesh);
 
 const canvas = document.querySelector('canvas');
@@ -111,37 +80,32 @@ function animate() {
 animate();
 
 
-if we want to see where the light is so there is a thing called light helpers we can add that the code for that is below
+![](U9wnqN4NIkvYOTtP4pHO9OdpcNGnBd57.svg)
+thats why here we wrote x=0 and y=0 in the code below
 
+const mouse = {
+      x: 0,
+      y: 0,
+}
 
-const lightHelper = new THREE.DirectionalLightHelper(light, 0.8);
-scene.add(lightHelper);
-
-now we can see the light is coming from which direction
-
-here is the full code
-
+iska diagram mouse.svg me h smjhaya hua 
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
+// ... existing code ...
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// ... existing code ...
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
 
 camera.position.z = 5;
 
-const light = new THREE.DirectionalLight("white",2);  ///light color and intensity set krne ke liye
-light.position.set(1, 1, 1);   ///light position set krne ke liye
-scene.add(light);  ///light add krne ke liye
 
-const lightHelper = new THREE.DirectionalLightHelper(light, 0.8);
-scene.add(lightHelper);
-
-const geometry = new THREE.SphereGeometry(1, 20, 20);
-const material = new THREE.MeshStandardMaterial({ color: "white"});
+const geometry = new THREE.BoxGeometry(1, 2, 3);
+const material = new THREE.MeshBasicMaterial({color: "red"});
 const mesh = new THREE.Mesh(geometry, material);
-mesh.rotation.y = 1;
+
+mesh.lookAt(new THREE.Vector3(-0.5, 0.1, 0.4));
 scene.add(mesh);
 
 const canvas = document.querySelector('canvas');
@@ -149,65 +113,123 @@ const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const controls = new OrbitControls(camera, renderer.domElement);  
+const mouse = {
+      x: 0,
+      y: 0,
+}
 
+window.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX / window.innerWidth;
+      mouse.y = e.clientY / window.innerHeight;
+});
 function animate() {
       window.requestAnimationFrame(animate);
       controls.update();
+      mesh.lookAt(new THREE.Vector3(mouse.x - 0.5 , -mouse.y + 0.5 , 1));
       renderer.render(scene, camera);
 }
-animate();
+animate();        
 
 
-----------------------------------------------------------------------------------------------------------------------
-                                                         understanding MeshPhysicalMaterial in three.js
-
-we can use this agar hme glass materials bnnane h toh
-we can play with the roughness and metalness and reflectivity and refraction ratio and all these things in threejs website serch materials and see MeshPhysicalMaterial and play with controls there
-
-and oviously isme me lights ki jarurat padti h 
+this is the basic structure of a gun how it will move and look 
+now the code for basic gun  for trial is below
 
 
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js"
 
+
+// Add texture loader
+const textureLoader = new THREE.TextureLoader();
+
+// Load your textures
+const metalTexture = textureLoader.load('/public/guntex.avif');
+metalTexture.colorSpace = THREE.SRGBColorSpace;   //to see proper color in the texture
+
+const gripTexture = textureLoader.load('/public/guntex.avif');
+gripTexture.colorSpace = THREE.SRGBColorSpace;   //to see proper color in the texture
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
 
-camera.position.z = 5;
+camera.position.z = 2;
 
-const light = new THREE.DirectionalLight("white",2);  ///light color and intensity set krne ke liye
-light.position.set(1, 1, 1);   ///light position set krne ke liye
-scene.add(light);  ///light add krne ke liye
+// Create gun group
+const gunGroup = new THREE.Group();
 
+// Create materials with textures
+const bodyMaterial = new THREE.MeshStandardMaterial({ 
+    map: metalTexture,
+    metalness: 0.7,
+    roughness: 0.3
+});
 
-const light2 = new THREE.DirectionalLight("red",2);  ///light color and intensity set krne ke liye
-light2.position.set(-1, -1, -1);   ///light position set krne ke liye
-scene.add(light2);  ///light add krne ke liye
+const handleMaterial = new THREE.MeshStandardMaterial({ 
+    map: gripTexture,
+    roughness: 0.8
+});
 
+// Main body of the gun
+const bodyGeometry = new THREE.BoxGeometry(1, 0.3, 0.3);
+const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
 
-const geometry = new THREE.SphereGeometry(1, 20, 20);
-const material = new THREE.MeshPhysicalMaterial({ color: "white"});
+// Gun barrel
+const barrelGeometry = new THREE.BoxGeometry(0.4, 0.2, 0.2);
+const barrel = new THREE.Mesh(barrelGeometry, bodyMaterial); // Using same material as body
+barrel.position.x = 0.7;
 
-material.metalness = 0.5;
-material.roughness = 0.5;
-material.clearcoat = 1;
-const mesh = new THREE.Mesh(geometry, material);
-mesh.rotation.y = 1;
-scene.add(mesh);
+// Gun handle/grip
+const handleGeometry = new THREE.BoxGeometry(0.25, 0.8, 0.2);
+const handle = new THREE.Mesh(handleGeometry, handleMaterial); // Using grip material
+handle.position.y = -0.5;
+
+// Add all parts to the gun group
+gunGroup.add(body);
+gunGroup.add(barrel);
+gunGroup.add(handle);
+
+// Add lighting (needed for MeshStandardMaterial)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(5, 5, 5);
+scene.add(directionalLight);
+
+scene.add(gunGroup);
+
+// ... rest of the code remains the same ...
+
+let hdri = new RGBELoader();
+hdri.load("https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/buikslotermeerplein_2k.hdr", function(hdritexture){
+      hdritexture.mapping = THREE.EquirectangularReflectionMapping;
+      // scene.background = hdritexture;
+      scene.environment = hdritexture;
+})
+
 
 const canvas = document.querySelector('canvas');
 const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const controls = new OrbitControls(camera, renderer.domElement);  
+const mouse = {
+    x: 0,
+    y: 0,
+}
+
+window.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX / window.innerWidth;
+    mouse.y = e.clientY / window.innerHeight;
+});
 
 function animate() {
-      window.requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
+    window.requestAnimationFrame(animate);
+    controls.update();
+    gunGroup.lookAt(new THREE.Vector3(mouse.x - 0.5 , -mouse.y + 0.5 , 1));
+    renderer.render(scene, camera);
 }
+
 animate();
-
-
